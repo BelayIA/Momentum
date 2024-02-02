@@ -39,10 +39,11 @@ def Calculate_points_of_entry(df_company, DateFrom, DateTill, Display_mode, Send
       #print(f'Company {company.TRADE_CODE}', end=" ") #{ticker_df["Momentum"][-1:].values[0]} {ticker_df["Momentum"][-2:-1].values[0]} {ticker_df["AO"][-1:].values[0]}', end=" ")
       #time.sleep(0.5)
 
+      flag_spred = mmnt_spred < abs(1 - ticker_df["Momentum"][-2:-1].values[0] / ticker_df["Momentum"][-1:].values[0])
+
       if (ticker_df["Momentum"][-1:].values[0] > 100) & \
               (ticker_df["Momentum"][-2:-1].values[0] < 100) & \
-              (ticker_df["AO"][-1:].values[0] > 0) & \
-              (mmnt_spred < abs(1 - ticker_df["Momentum"][-2:-1].values[0] / ticker_df["Momentum"][-1:].values[0])):
+              (ticker_df["AO"][-1:].values[0] > 0) & flag_spred:
         # spred= abs(1 - ticker_df["Momentum"][-2:-1].values[0] / ticker_df["Momentum"][-1:].values[0])
         # print(f"spred {spred}")
         var_cross = "UP_momentum_UP_AO"
@@ -53,8 +54,7 @@ def Calculate_points_of_entry(df_company, DateFrom, DateTill, Display_mode, Send
 
       elif (ticker_df["Momentum"][-1:].values[0] > 100) & \
               (ticker_df["Momentum"][-2:-1].values[0] < 100) & \
-              (ticker_df["AO"][-1:].values[0] < 0) & \
-              (mmnt_spred < abs(1 - ticker_df["Momentum"][-2:-1].values[0]/ticker_df["Momentum"][-1:].values[0])):
+              (ticker_df["AO"][-1:].values[0] < 0) & flag_spred:
         # spred = abs(1 - ticker_df["Momentum"][-2:-1].values[0] / ticker_df["Momentum"][-1:].values[0])
         # print(f"spred {spred}")
         var_cross = "UP_momentum_DOWN_AO"
@@ -65,8 +65,7 @@ def Calculate_points_of_entry(df_company, DateFrom, DateTill, Display_mode, Send
 
       elif (ticker_df["Momentum"][-1:].values[0] < 100) & \
               (ticker_df["Momentum"][-2:-1].values[0] > 100) & \
-              (ticker_df["AO"][-1:].values[0] > 0) & \
-              (mmnt_spred < abs(1 - ticker_df["Momentum"][-2:-1].values[0] / ticker_df["Momentum"][-1:].values[0])):
+              (ticker_df["AO"][-1:].values[0] > 0) & flag_spred:
         # spred = abs(1 - ticker_df["Momentum"][-2:-1].values[0] / ticker_df["Momentum"][-1:].values[0])
         # print(f"spred {spred}")
         var_cross = "DOWN_momentum_UP_AO"
@@ -77,8 +76,7 @@ def Calculate_points_of_entry(df_company, DateFrom, DateTill, Display_mode, Send
 
       elif (ticker_df["Momentum"][-1:].values[0] < 100) & \
               (ticker_df["Momentum"][-2:-1].values[0] > 100) & \
-              (ticker_df["AO"][-1:].values[0] < 0) & \
-              (mmnt_spred < abs(1 - ticker_df["Momentum"][-2:-1].values[0] / ticker_df["Momentum"][-1:].values[0])):
+              (ticker_df["AO"][-1:].values[0] < 0) & flag_spred:
         # spred = abs(1 - ticker_df["Momentum"][-2:-1].values[0] / ticker_df["Momentum"][-1:].values[0])
         # print(f"spred {spred}")
         var_cross = "DOWN_momentum_DOWN_AO"
