@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import Ma_lib as ta
+# from math import fabs
 from Variables import *
 from Telegram_lib import *
 
@@ -38,25 +39,53 @@ def Calculate_points_of_entry(df_company, DateFrom, DateTill, Display_mode, Send
       #print(f'Company {company.TRADE_CODE}', end=" ") #{ticker_df["Momentum"][-1:].values[0]} {ticker_df["Momentum"][-2:-1].values[0]} {ticker_df["AO"][-1:].values[0]}', end=" ")
       #time.sleep(0.5)
 
-      if (ticker_df["Momentum"][-1:].values[0] > 100) & (ticker_df["Momentum"][-2:-1].values[0] < 100) & (ticker_df["AO"][-1:].values[0] > 0):
+      if (ticker_df["Momentum"][-1:].values[0] > 100) & \
+              (ticker_df["Momentum"][-2:-1].values[0] < 100) & \
+              (ticker_df["AO"][-1:].values[0] > 0) & \
+              (mmnt_spred < abs(1 - ticker_df["Momentum"][-2:-1].values[0] / ticker_df["Momentum"][-1:].values[0])):
+        # spred= abs(1 - ticker_df["Momentum"][-2:-1].values[0] / ticker_df["Momentum"][-1:].values[0])
+        # print(f"spred {spred}")
         var_cross = "UP_momentum_UP_AO"
-        ticker_df.loc[(ticker_df["Momentum"] > 100) & (ticker_df["Momentum"].shift(periods=1) < 100)
-        & (ticker_df["AO"] > 0), "Place_of_Cross"] = True
+        ticker_df.loc[(ticker_df["Momentum"] > 100) & (ticker_df["Momentum"].shift(periods=1) < 100) \
+        & (ticker_df["AO"] > 0) & \
+        (mmnt_spred < abs(1 - ticker_df["Momentum"].shift(periods=1)/ ticker_df["Momentum"])), \
+        "Place_of_Cross"] = True
 
-      elif (ticker_df["Momentum"][-1:].values[0] > 100) & (ticker_df["Momentum"][-2:-1].values[0] < 100) & (ticker_df["AO"][-1:].values[0] < 0):
+      elif (ticker_df["Momentum"][-1:].values[0] > 100) & \
+              (ticker_df["Momentum"][-2:-1].values[0] < 100) & \
+              (ticker_df["AO"][-1:].values[0] < 0) & \
+              (mmnt_spred < abs(1 - ticker_df["Momentum"][-2:-1].values[0]/ticker_df["Momentum"][-1:].values[0])):
+        # spred = abs(1 - ticker_df["Momentum"][-2:-1].values[0] / ticker_df["Momentum"][-1:].values[0])
+        # print(f"spred {spred}")
         var_cross = "UP_momentum_DOWN_AO"
         ticker_df.loc[(ticker_df["Momentum"] > 100) & (ticker_df["Momentum"].shift(periods=1) < 100)
-        & (ticker_df["AO"] < 0), "Place_of_Cross"] = True
+        & (ticker_df["AO"] < 0) & \
+        (mmnt_spred < abs(1 - ticker_df["Momentum"].shift(periods=1) / ticker_df["Momentum"])), \
+        "Place_of_Cross"] = True
 
-      elif (ticker_df["Momentum"][-1:].values[0] < 100) & (ticker_df["Momentum"][-2:-1].values[0] > 100) & (ticker_df["AO"][-1:].values[0] > 0):
+      elif (ticker_df["Momentum"][-1:].values[0] < 100) & \
+              (ticker_df["Momentum"][-2:-1].values[0] > 100) & \
+              (ticker_df["AO"][-1:].values[0] > 0) & \
+              (mmnt_spred < abs(1 - ticker_df["Momentum"][-2:-1].values[0] / ticker_df["Momentum"][-1:].values[0])):
+        # spred = abs(1 - ticker_df["Momentum"][-2:-1].values[0] / ticker_df["Momentum"][-1:].values[0])
+        # print(f"spred {spred}")
         var_cross = "DOWN_momentum_UP_AO"
         ticker_df.loc[(ticker_df["Momentum"] < 100) & (ticker_df["Momentum"].shift(periods=1) > 100)
-        & (ticker_df["AO"] > 0), "Place_of_Cross"] = True
+        & (ticker_df["AO"] > 0) & \
+        (mmnt_spred < abs(1 - ticker_df["Momentum"].shift(periods=1) / ticker_df["Momentum"])), \
+        "Place_of_Cross"] = True
 
-      elif (ticker_df["Momentum"][-1:].values[0] < 100) & (ticker_df["Momentum"][-2:-1].values[0] > 100) & (ticker_df["AO"][-1:].values[0] < 0):
+      elif (ticker_df["Momentum"][-1:].values[0] < 100) & \
+              (ticker_df["Momentum"][-2:-1].values[0] > 100) & \
+              (ticker_df["AO"][-1:].values[0] < 0) & \
+              (mmnt_spred < abs(1 - ticker_df["Momentum"][-2:-1].values[0] / ticker_df["Momentum"][-1:].values[0])):
+        # spred = abs(1 - ticker_df["Momentum"][-2:-1].values[0] / ticker_df["Momentum"][-1:].values[0])
+        # print(f"spred {spred}")
         var_cross = "DOWN_momentum_DOWN_AO"
         ticker_df.loc[(ticker_df["Momentum"] < 100) & (ticker_df["Momentum"].shift(periods=1) > 100)
-        & (ticker_df["AO"] < 0), "Place_of_Cross"] = True
+        & (ticker_df["AO"] < 0) & \
+        (mmnt_spred < abs(1 - ticker_df["Momentum"].shift(periods=1) / ticker_df["Momentum"])), \
+        "Place_of_Cross"] = True
 
       if var_cross:
         #print(f"var_cross: {var_cross}", end='\n')
@@ -98,8 +127,9 @@ def Calculate_points_of_entry(df_company, DateFrom, DateTill, Display_mode, Send
               print(message)
 
             if Send_mmode:
+              # Слать данные в канал
               Send_telegram(message, TOKEN, channel_id)
-
+              # Слать данные в бот
               # url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={message}"
               # print(requests.get(url).json()) # Эта строка отсылает сообщение в бот
 
