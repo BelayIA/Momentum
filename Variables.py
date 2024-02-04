@@ -9,7 +9,8 @@ Path_to_quotes = "Data_Quotes/"
 # Telegram
 
 TOKEN = "6861814836:AAEbcVRVpquCi_Rmm6m-JZYN5kGH_uFb-oM"
-channel_id = "@MoexPoints"
+channel_12_id = "@MoexPoints"
+channel_3_id = "@MoexPoints_3lvl"
 url = f"https://api.telegram.org/bot{TOKEN}/getUpdates"
 chat_id = "214846543"
 

@@ -125,11 +125,15 @@ def Calculate_points_of_entry(df_company, DateFrom, DateTill, Display_mode, Send
               print(message)
 
             if Send_mmode:
-              # Слать данные в канал
-              Send_telegram(message, TOKEN, channel_id)
               # Слать данные в бот
               # url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={message}"
               # print(requests.get(url).json()) # Эта строка отсылает сообщение в бот
+              if company.LIST_SECTION == "Третий уровень":
+                # Слать данные в канал @MoexPoints_3lvl
+                Send_telegram(message, TOKEN, channel_3_id)
+              else:
+                # Слать данные в канал @MoexPoints
+                Send_telegram(message, TOKEN, channel_12_id)
 
     except Exception as e:
       if Display_mode:
