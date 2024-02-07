@@ -8,7 +8,11 @@ Path_to_quotes = "Data_Quotes/"
 
 # Telegram
 
-TOKEN = "6861814836:AAEbcVRVpquCi_Rmm6m-JZYN5kGH_uFb-oM"
+# токен для BuyOrSell_bot
+#TOKEN = "6861814836:AAEbcVRVpquCi_Rmm6m-JZYN5kGH_uFb-oM"
+# токен для MoexPoints_bot
+TOKEN = "6744196290:AAFKvq0XaZ3cqbt1DTumBZ9BJe8yTYumLdw"
+
 channel_12_id = "@MoexPoints"
 channel_3_id = "@MoexPoints_3lvl"
 url = f"https://api.telegram.org/bot{TOKEN}/getUpdates"
