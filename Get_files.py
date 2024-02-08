@@ -8,7 +8,7 @@ Display_mode = True
 
 LastDate = datetime.today() - timedelta(1)
 DateTill = LastDate.strftime('%Y-%m-%d') #str(LastDate.year) + "-" + str(LastDate.month) + '-' + str(LastDate.day)
-LastDate = datetime.today() - timedelta(1000)  # количество дней в б/д
+LastDate = datetime.today() - timedelta(700)  # количество дней в б/д
 DateFrom = LastDate.strftime('%Y-%m-%d') #str(LastDate.year) + "-" + str(LastDate.month) + '-' + str(LastDate.day)
 TimeNow = str(datetime.today().hour) + "-" + str(datetime.today().minute) + " UTS"
 
